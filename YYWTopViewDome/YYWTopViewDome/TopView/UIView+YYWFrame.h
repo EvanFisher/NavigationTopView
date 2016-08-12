@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#define screenW_yyw [UIScreen mainScreen].bounds.size.width
+#define screenH_yyw [UIScreen mainScreen].bounds.size.height
+
 @interface UIView (YYWFrame)
 @property (assign, nonatomic) CGFloat centerX_yyw;
 @property (assign, nonatomic) CGFloat centerY_yyw;

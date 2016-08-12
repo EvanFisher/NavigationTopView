@@ -49,10 +49,11 @@
     topView.frame = CGRectMake(0, 20, screenW_yyw+200 , 44);
     
     
-//    topView.bottomLineType = kEqualToTitle;
+    topView.bottomLineType = kEqualToButton;
     
-//    topView.titleChangeType = kMidwayChange;
+//    topView.titleChangeType = kEndDeceleratingChange;
     
+    topView.gradualChangeTitleEndClicking = YES;
     
     [self.view addSubview:topView];
     
@@ -75,7 +76,7 @@
     
     
     UIViewController *VC3 = [[UIViewController alloc] init];
-    VC3.view.backgroundColor = [UIColor purpleColor];
+    VC3.view.backgroundColor = [UIColor whiteColor];
     [self addOneChildVC:VC3 withTitle:@"Java"];
     
     UIViewController *VC4 = [[UIViewController alloc] init];

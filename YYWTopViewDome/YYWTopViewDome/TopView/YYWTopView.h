@@ -42,7 +42,8 @@ typedef enum {
     /** 拖动CollectionView时, 中途改变title的颜色. */
     kMidwayChange = 2,
     
-    /** CollectionView减速完毕后, 改变title的颜色 */
+    /** CollectionView减速完毕后, 改变title的颜色.
+     如果设置了这个枚举值, 那么"gradualChangeTitleEndClicking"这个布尔属性无效. */
     kEndDeceleratingChange = 3
     
 } TitleChangeType;
@@ -52,8 +53,6 @@ typedef enum {
 
 #import <UIKit/UIKit.h>
 #import "UIView+YYWFrame.h"
-#define screenW_yyw [UIScreen mainScreen].bounds.size.width
-#define screenH_yyw [UIScreen mainScreen].bounds.size.height
 
 
 @interface YYWTopView : UIView
@@ -61,18 +60,18 @@ typedef enum {
 /**  这是一个枚举, 可以选择底部线的宽度.*/
 @property (assign, nonatomic) BottomLineType bottomLineType;
 
-/**  这是一个枚举, 当拖动CollectionView时, title怎样变换.*/
+/**  这是一个枚举, 当拖动CollectionView时, 选择title变换样式.*/
 @property (assign, nonatomic) TitleChangeType titleChangeType;
 
 
-/**  是否在拖动结束后移动底部线, 默认是NO. */
+/**  是否在点击后让title渐变, 或让CollectionView移动时加动画, 默认是NO. */
 @property (assign, nonatomic) BOOL gradualChangeTitleEndClicking;
 
 
 
 
 /** 传递当前点击按钮的Index, 在点击按钮时让Collection的cell移动到对应位置. */
-@property (copy, nonatomic) void(^moveContentView)(NSInteger);
+@property (copy, nonatomic) void(^moveContentView)(int);
 
 /** 用于让外界传递按钮的内容 */
 @property(strong, nonatomic)NSArray *buttonTitleArray;

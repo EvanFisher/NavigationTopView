@@ -18,4 +18,5 @@
  *  @return 一个装着title字符串的可变数组, 初始化topView时, 可以将这个数组传递给自定义累工厂方法.
  */
 - (NSMutableArray *)addOneChildVC:(UIViewController *)VC withTitle:(NSString *)title;
+
 @end

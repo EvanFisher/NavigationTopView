@@ -8,7 +8,7 @@
 
 #import "YYWTopView.h"
 
-@interface YYWTopView()<UIScrollViewDelegate>
+@interface YYWTopView()
 
 @property (weak, nonatomic) UIScrollView *scroll;
 
@@ -68,11 +68,12 @@ static YYWTopView *_instance;
     
     scroll.showsHorizontalScrollIndicator = NO;
     
-    scroll.delegate = self;
     
     _titleChangeType = kGradualChange;
     
     _bottomLineType = kEqualToTitle;
+    
+    
     
     for (int i = 0; i < _buttonTitleArray.count; i++)
     {
@@ -133,37 +134,33 @@ static YYWTopView *_instance;
 - (void)setBottomLineColor:(UIColor *)color
 {
     _bottomLine.backgroundColor = color;
-    
 }
 
 
 /** 点击按钮方法 */
--(void)clickBtn:(UIButton*)btn
+- (void)clickBtn:(UIButton *)btn
 {
-    
-    float time = _gradualChangeTitleEndClicking ? 0.5 : 0.15;
     
     //先让点击按钮被选中
     [self selectButton:btn];
     
     //再让底部条滚到对应位置
     if (_bottomLineType)
-        [UIView animateWithDuration:time animations:^{
+        [UIView animateWithDuration:0.15 animations:^{
             
             switch ((int)_bottomLineType)
-            {   //如果底部线和按钮的文字一样宽
+            {
+                //如果底部线和按钮的文字一样宽
                 case kEqualToTitle:
                     
                     _bottomLine.width_yyw = _selectedBtn.titleLabel.width_yyw;
-                    
                     _bottomLine.centerX_yyw = _selectedBtn.centerX_yyw;
-                    
-                    
                     break;
-                    //如果底部线和按钮一样宽
-                case kEqualToButton:
-                    _bottomLine.x_yyw = _selectedBtn.x_yyw;
                     
+                //如果底部线和按钮一样宽
+                case kEqualToButton:
+                    
+                    _bottomLine.x_yyw = _selectedBtn.x_yyw;
                     break;
                     
             }
@@ -172,10 +169,46 @@ static YYWTopView *_instance;
     
     
     //然后调用block, 让CollectionView滚到对应位置
-    if (_moveContentView)    self.moveContentView(_selectedBtn.x_yyw / _btnW);
+    if (_moveContentView)    _moveContentView(_selectedBtn.x_yyw / _btnW);
 
     //最后让选中的title滚到中间
-    [self moveTopViewWhenEndDecelerating];
+//    [self moveTopViewWhenEndDecelerating];
+    
+    {
+        if (_titleChangeType == kEndDeceleratingChange)
+            _gradualChangeTitleEndClicking = NO;
+        
+        
+        UIButton * tempBtn = _gradualChangeTitleEndClicking ? _selectedBtn : _currentBtn;
+        
+        
+        CGFloat currentBtnMidX = tempBtn.centerX_yyw;
+        CGFloat offset;
+        CGFloat halfWidth = _scroll.width_yyw * 0.5;
+        CGFloat contentWidth = _scroll.contentSize.width;
+        
+        if (currentBtnMidX < halfWidth)    offset = 0;
+        
+        else if (currentBtnMidX > contentWidth - halfWidth)
+            offset = contentWidth - _scroll.width_yyw;
+        
+        else    offset = currentBtnMidX - halfWidth;
+        
+        [_scroll setContentOffset:CGPointMake(offset, 0) animated:YES];
+        
+        [self selectButton:_currentBtn];
+        
+        if (_titleChangeType == kEndDeceleratingChange)
+            [UIView animateWithDuration:0.15 animations:^{
+                
+                if (_bottomLineType == kEqualToTitle)
+                    _bottomLine.width_yyw = _currentBtn.titleLabel.width_yyw;
+                else if (_bottomLineType == kEqualToButton)
+                    _bottomLine.width_yyw = _btnW;
+                
+                _bottomLine.centerX_yyw = _currentBtn.centerX_yyw;
+            }];
+    }
 }
 
 
@@ -189,6 +222,7 @@ static YYWTopView *_instance;
     const int btnIndex = (contentOffsetX - _scroll.width_yyw * 0.5) / _scroll.width_yyw + 0.5;
     
     //拿到当前点击的按钮
+    
     _currentBtn = _scroll.subviews[btnIndex];
     
     //拿到下一个按钮
@@ -269,27 +303,35 @@ static YYWTopView *_instance;
 
 - (void)moveTopViewWhenEndDecelerating
 {
+    
+    
+//    UIButton * tempBtn = _gradualChangeTitleEndClicking ? _selectedBtn : _currentBtn;
+    
+    
     CGFloat currentBtnMidX = _currentBtn.centerX_yyw;
     CGFloat offset;
     CGFloat halfWidth = _scroll.width_yyw * 0.5;
     CGFloat contentWidth = _scroll.contentSize.width;
     
-    if (currentBtnMidX < halfWidth)  offset = 0;
+    if (currentBtnMidX < halfWidth)    offset = 0;
     
     else if (currentBtnMidX > contentWidth - halfWidth)
-        offset = contentWidth - 2 * halfWidth;
+        offset = contentWidth - _scroll.width_yyw;
     
-    else  offset = currentBtnMidX - halfWidth;
+    else    offset = currentBtnMidX - halfWidth;
     
     [_scroll setContentOffset:CGPointMake(offset, 0) animated:YES];
-    
     
     [self selectButton:_currentBtn];
     
     if (_titleChangeType == kEndDeceleratingChange)
         [UIView animateWithDuration:0.15 animations:^{
             
-            _bottomLine.width_yyw = _currentBtn.titleLabel.width_yyw;
+            if (_bottomLineType == kEqualToTitle)
+                _bottomLine.width_yyw = _currentBtn.titleLabel.width_yyw;
+            else if (_bottomLineType == kEqualToButton)
+                _bottomLine.width_yyw = _btnW;
+            
             _bottomLine.centerX_yyw = _currentBtn.centerX_yyw;
         }];
 }
@@ -316,7 +358,6 @@ static YYWTopView *_instance;
     {
         UIButton *btn = _scroll.subviews[i];
         btn.frame = CGRectMake(i * _btnW, 0, _btnW, self.height_yyw);
-        
     }
     
     if (_bottomLineType)
@@ -337,9 +378,7 @@ static YYWTopView *_instance;
             //设置底部线的frame
             _bottomLine.frame = CGRectMake(_selectedBtn.x_yyw, self.height_yyw - 2, _selectedBtn.width_yyw, 2);
             break;
-            
-        default:
-            break;
+
     }
     
     _scale = _buttonTitleArray.count * screenW_yyw / _scroll.contentSize.width;

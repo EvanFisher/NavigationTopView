@@ -27,9 +27,11 @@ static NSString * const CollectionCell = @"CollectionCell";
     
     return _topBtnArray;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     //先添加内容View
     [self setupContentView];
     
@@ -46,10 +48,11 @@ static NSString * const CollectionCell = @"CollectionCell";
     YYWTopView *topView = [[YYWTopView alloc] init];
     
     
-    //    在block方法里移动ContentView
-    topView.moveContentView = ^(NSInteger btnIndex)
+    //在block方法里移动ContentView
+    __weak YYWTopView* weakTopView = topView;
+    topView.moveContentView = ^(int btnIndex)
     {
-        _contentView.contentOffset = CGPointMake(btnIndex * screenW_yyw, 0);
+        [_contentView setContentOffset:CGPointMake(btnIndex * screenW_yyw, 0)animated:weakTopView.gradualChangeTitleEndClicking];
     };
     _topView = topView;
     
