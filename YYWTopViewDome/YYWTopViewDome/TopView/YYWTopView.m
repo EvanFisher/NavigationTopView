@@ -63,7 +63,7 @@ static YYWTopView *_instance;
     _buttonTitleArray = buttonArray;
     
     self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-    //
+    
     UIScrollView *scroll = [[UIScrollView alloc] init];
     
     scroll.showsHorizontalScrollIndicator = NO;
@@ -140,12 +140,15 @@ static YYWTopView *_instance;
 /** 点击按钮方法 */
 - (void)clickBtn:(UIButton *)btn
 {
+    if (_titleChangeType == kEndDeceleratingChange)
+        _gradualChangeTitleEndClicking = NO;
     
     //先让点击按钮被选中
-    [self selectButton:btn];
+    if (_gradualChangeTitleEndClicking)    _selectedBtn = btn;
+    else    [self selectButton:btn];
     
     //再让底部条滚到对应位置
-    if (_bottomLineType)
+    if (_bottomLineType && !_gradualChangeTitleEndClicking)
         [UIView animateWithDuration:0.15 animations:^{
             
             switch ((int)_bottomLineType)
@@ -162,53 +165,17 @@ static YYWTopView *_instance;
                     
                     _bottomLine.x_yyw = _selectedBtn.x_yyw;
                     break;
-                    
             }
-            
         }];
-    
-    
+
     //然后调用block, 让CollectionView滚到对应位置
     if (_moveContentView)    _moveContentView(_selectedBtn.x_yyw / _btnW);
 
     //最后让选中的title滚到中间
-//    [self moveTopViewWhenEndDecelerating];
+    CGFloat currentBtnMidX = _gradualChangeTitleEndClicking ? _selectedBtn.centerX_yyw : _currentBtn.centerX_yyw;
     
-    {
-        if (_titleChangeType == kEndDeceleratingChange)
-            _gradualChangeTitleEndClicking = NO;
-        
-        
-        UIButton * tempBtn = _gradualChangeTitleEndClicking ? _selectedBtn : _currentBtn;
-        
-        
-        CGFloat currentBtnMidX = tempBtn.centerX_yyw;
-        CGFloat offset;
-        CGFloat halfWidth = _scroll.width_yyw * 0.5;
-        CGFloat contentWidth = _scroll.contentSize.width;
-        
-        if (currentBtnMidX < halfWidth)    offset = 0;
-        
-        else if (currentBtnMidX > contentWidth - halfWidth)
-            offset = contentWidth - _scroll.width_yyw;
-        
-        else    offset = currentBtnMidX - halfWidth;
-        
-        [_scroll setContentOffset:CGPointMake(offset, 0) animated:YES];
-        
-        [self selectButton:_currentBtn];
-        
-        if (_titleChangeType == kEndDeceleratingChange)
-            [UIView animateWithDuration:0.15 animations:^{
-                
-                if (_bottomLineType == kEqualToTitle)
-                    _bottomLine.width_yyw = _currentBtn.titleLabel.width_yyw;
-                else if (_bottomLineType == kEqualToButton)
-                    _bottomLine.width_yyw = _btnW;
-                
-                _bottomLine.centerX_yyw = _currentBtn.centerX_yyw;
-            }];
-    }
+    [self moveScrollViewWhenEndDecelerating:currentBtnMidX];
+
 }
 
 
@@ -222,7 +189,6 @@ static YYWTopView *_instance;
     const int btnIndex = (contentOffsetX - _scroll.width_yyw * 0.5) / _scroll.width_yyw + 0.5;
     
     //拿到当前点击的按钮
-    
     _currentBtn = _scroll.subviews[btnIndex];
     
     //拿到下一个按钮
@@ -231,7 +197,6 @@ static YYWTopView *_instance;
     //容错
     if (![_scroll.subviews[btnIndex+1] isKindOfClass:_currentBtn.class])
         _nextBtn = _scroll.subviews[btnIndex-1];
-    
     
     //变换底部线
     if (_bottomLineType && _titleChangeType != kEndDeceleratingChange)
@@ -274,25 +239,12 @@ static YYWTopView *_instance;
         {
             
             
-            CGFloat gradulValueUp = contentOffsetX / _scroll.width_yyw - btnIndex;
+            CGFloat gradulValueUp = (contentOffsetX / _scroll.width_yyw - btnIndex);
             
             _currentBtn.titleLabel.textColor = [UIColor colorWithRed:1 - gradulValueUp green:0 blue:0 alpha:1];
             
-            _nextBtn.titleLabel.textColor = [UIColor colorWithRed:gradulValueUp green:0 blue:0 alpha:1];
-            
-            
-            
-            //        CGFloat fontDown = 17 + (4 - gradulValueUp * 4);
-            //        NSLog(@"%f", gradulValueUp*0.5);
-            //
-            //
-            //
-            //        CGFloat fontUp = 17 + gradulValueUp * 4;
-            //
-            //        _currentBtn.titleLabel.font = [UIFont systemFontOfSize:fontDown];
-            //
-            //        _nextBtn.titleLabel.font = [UIFont systemFontOfSize:fontUp];
-            
+            _nextBtn.titleLabel.textColor = [UIColor colorWithRed:gradulValueUp  green:0 blue:0 alpha:1];
+
             
         }
         
@@ -301,14 +253,10 @@ static YYWTopView *_instance;
 }
 
 
-- (void)moveTopViewWhenEndDecelerating
+- (void)moveScrollViewWhenEndDecelerating:(CGFloat)currentBtnMidX
 {
-    
-    
-//    UIButton * tempBtn = _gradualChangeTitleEndClicking ? _selectedBtn : _currentBtn;
-    
-    
-    CGFloat currentBtnMidX = _currentBtn.centerX_yyw;
+
+    if (!currentBtnMidX)    currentBtnMidX = _currentBtn.centerX_yyw;
     CGFloat offset;
     CGFloat halfWidth = _scroll.width_yyw * 0.5;
     CGFloat contentWidth = _scroll.contentSize.width;

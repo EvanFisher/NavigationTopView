@@ -49,7 +49,7 @@
     topView.frame = CGRectMake(0, 20, screenW_yyw+200 , 44);
     
     
-    topView.bottomLineType = kEqualToButton;
+    topView.bottomLineType = kEqualToTitle;
     
 //    topView.titleChangeType = kEndDeceleratingChange;
     

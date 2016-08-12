@@ -156,7 +156,7 @@ static NSString * const CollectionCell = @"CollectionCell";
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     
-    [_topView moveTopViewWhenEndDecelerating];
+    [_topView moveScrollViewWhenEndDecelerating:0];
     
 }
 

@@ -100,7 +100,7 @@ typedef enum {
  */
 - (void)moveBottomLineWithcontentOffset:(float)contentOffsetX;
 
-/** 外部的CollectionView滚动完毕后, 让当前选中的按钮滚到中间. */
-- (void)moveTopViewWhenEndDecelerating;
+/** 外部的CollectionView滚动完毕后, 让当前选中的按钮滚到中间. 外部调用这个方法时, 参数传为0! */
+- (void)moveScrollViewWhenEndDecelerating:(CGFloat)currentBtnMidX;
 
 @end
