@@ -12,11 +12,17 @@
 #define screenH_yyw [UIScreen mainScreen].bounds.size.height
 
 @interface UIView (YYWFrame)
+/** 快速取center.x的值 */
 @property (assign, nonatomic) CGFloat centerX_yyw;
+/** 快速取center.y的值 */
 @property (assign, nonatomic) CGFloat centerY_yyw;
+/** 快速取x的值 */
 @property (assign, nonatomic) CGFloat x_yyw;
+/** 快速取y的值 */
 @property (assign, nonatomic) CGFloat y_yyw;
+/** 快速取width的值 */
 @property (assign, nonatomic) CGFloat width_yyw;
+/** 快速取height的值 */
 @property (assign, nonatomic) CGFloat height_yyw;
 
 @end
