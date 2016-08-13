@@ -87,10 +87,15 @@ typedef enum {
 @property (weak, nonatomic) UIView *bottomLine;
 
 
-
-
--(instancetype)initWithButtonArray:(NSArray*)array;
+/**
+ *  自定义类工厂方法, 传入一个保存字符串的字典, 来确定TopView上显示的内容.
+ *
+ *  @param array 一个保存字符串的字典, 用来确定TopView上显示的内容.
+ */
 +(instancetype)topViewWithButtonArray:(NSArray*)array;
+-(instancetype)initWithButtonArray:(NSArray*)array;
+
+
 
 
 /**

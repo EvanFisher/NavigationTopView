@@ -51,7 +51,8 @@
     
     topView.bottomLineType = kEqualToTitle;
     
-//    topView.titleChangeType = kEndDeceleratingChange;
+    
+    topView.titleChangeType = kEndDeceleratingChange;
     
     topView.gradualChangeTitleEndClicking = YES;
     
@@ -91,7 +92,7 @@
     VC6.view.backgroundColor = [UIColor grayColor];
     [self addOneChildVC:VC6 withTitle:@"C++"];
     
-    
+    //接收返回的数组
     [self.topBtnArray addObjectsFromArray:[self addOneChildVC:[[UIViewController alloc] init] withTitle:@"Python"]];
     
     
