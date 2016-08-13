@@ -11,7 +11,7 @@
 ###使用方法:
 1. 导入Deme中的"TopView" 文件夹.
 2. 让需要添加TopView的控制器, 继承自"YYWViewController".
-3. 在控制器中, 创建"YYWTopView"类(推荐用自定义类工厂方法), 并传入存储String(title的字典).
+3. 在控制器中, 创建"YYWTopView"类(推荐用自定义类工厂方法), 并传入存储字符串的字典.
 4. 在控制器中调用父类"YYWViewController"中的方法, 添加子控件.
 
 	
