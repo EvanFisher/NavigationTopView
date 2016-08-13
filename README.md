@@ -15,11 +15,12 @@
 4. 在控制器中调用父类"YYWViewController"中的方法, 添加子控件.
 
 	
-	
+<br />	
 <br />
+---
 ###实现效果:
 
-- ###title颜色和底部线渐变, 类似知乎发现栏顶部效果.
+- **title颜色和底部线渐变, 类似知乎发现栏顶部效果.**
 
 ```Object-C 
 topView.titleChangeType = kGradualChange;// 默认效果
@@ -31,9 +32,9 @@ topView.titleChangeType = kGradualChange;// 默认效果
 <br />
 <br />
 
-- ###title颜色在拖动中途改变.
+- **title颜色在拖动中途改变.**
 
-``` 
+```Object-C 
 topView.titleChangeType = kMidwayChange;
 ```
 
@@ -42,9 +43,9 @@ topView.titleChangeType = kMidwayChange;
 <br />
 <br />
 
-- ###title颜色在拖动完成后改变.
+- **title颜色在拖动完成后改变.**
 
-``` 
+```Object-C 
 topView.titleChangeType = kEndDeceleratingChange;
 ```
 
@@ -54,9 +55,9 @@ topView.titleChangeType = kEndDeceleratingChange;
 <br />
 
 
-- ###底部线宽度和按钮宽度一致.
+- **底部线宽度和按钮宽度一致.**
 
-``` 
+```Object-C 
 topView.bottomLineType = kEqualToButton;
 ```
 
@@ -66,9 +67,9 @@ topView.bottomLineType = kEqualToButton;
 <br />
 
 
-- ###点击后让title的颜色渐变.
+- **点击后让title的颜色渐变.**
 
-``` 
+```Object-C 
 topView.gradualChangeTitleEndClicking = YES;
 ```
 
