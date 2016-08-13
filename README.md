@@ -19,7 +19,7 @@
 <br />
 ###实现效果:
 
-- **##title颜色和底部线渐变, 类似知乎发现栏顶部效果.**
+* **##title颜色和底部线渐变, 类似知乎发现栏顶部效果.**
 
 ```Object-C 
 topView.titleChangeType = kGradualChange;// 默认效果
@@ -31,7 +31,7 @@ topView.titleChangeType = kGradualChange;// 默认效果
 <br />
 <br />
 
-- ##**title颜色在拖动中途改变.**
+* ##**title颜色在拖动中途改变.**
 
 ```Object-C 
 topView.titleChangeType = kMidwayChange;
