@@ -46,15 +46,15 @@
     
     
     
-    topView.frame = CGRectMake(0, 20, screenW_yyw+200 , 44);
+    topView.frame = CGRectMake(0, 20, screenW_yyw + 200, 44);
     
     
-    topView.bottomLineType = kEqualToTitle;
+//    topView.bottomLineType = kEqualToTitle;
     
     
-    topView.titleChangeType = kEndDeceleratingChange;
+//    topView.titleChangeType = kMidwayChange;
     
-    topView.gradualChangeTitleEndClicking = YES;
+//    topView.gradualChangeTitleEndClicking = YES;
     
     [self.view addSubview:topView];
     

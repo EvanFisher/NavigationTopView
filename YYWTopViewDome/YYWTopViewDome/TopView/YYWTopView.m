@@ -153,29 +153,29 @@ static YYWTopView *_instance;
             
             switch ((int)_bottomLineType)
             {
-                //如果底部线和按钮的文字一样宽
+                    //如果底部线和按钮的文字一样宽
                 case kEqualToTitle:
                     
                     _bottomLine.width_yyw = _selectedBtn.titleLabel.width_yyw;
                     _bottomLine.centerX_yyw = _selectedBtn.centerX_yyw;
                     break;
                     
-                //如果底部线和按钮一样宽
+                    //如果底部线和按钮一样宽
                 case kEqualToButton:
                     
                     _bottomLine.x_yyw = _selectedBtn.x_yyw;
                     break;
             }
         }];
-
+    
     //然后调用block, 让CollectionView滚到对应位置
     if (_moveContentView)    _moveContentView(_selectedBtn.x_yyw / _btnW);
-
+    
     //最后让选中的title滚到中间
     CGFloat currentBtnMidX = _gradualChangeTitleEndClicking ? _selectedBtn.centerX_yyw : _currentBtn.centerX_yyw;
     
     [self moveScrollViewWhenEndDecelerating:currentBtnMidX];
-
+    
 }
 
 
@@ -244,7 +244,7 @@ static YYWTopView *_instance;
             _currentBtn.titleLabel.textColor = [UIColor colorWithRed:1 - gradulValueUp green:0 blue:0 alpha:1];
             
             _nextBtn.titleLabel.textColor = [UIColor colorWithRed:gradulValueUp  green:0 blue:0 alpha:1];
-
+            
             
         }
         
@@ -255,8 +255,8 @@ static YYWTopView *_instance;
 
 - (void)moveScrollViewWhenEndDecelerating:(CGFloat)currentBtnMidX
 {
-    if (_scroll.contentSize.width <= self.width_yyw)    return;
-
+    
+    
     if (!currentBtnMidX)    currentBtnMidX = _currentBtn.centerX_yyw;
     CGFloat offset;
     CGFloat halfWidth = _scroll.width_yyw * 0.5;
@@ -272,6 +272,8 @@ static YYWTopView *_instance;
     [_scroll setContentOffset:CGPointMake(offset, 0) animated:YES];
     
     [self selectButton:_currentBtn];
+    
+    
     
     if (_titleChangeType == kEndDeceleratingChange)
         [UIView animateWithDuration:0.15 animations:^{
@@ -327,7 +329,7 @@ static YYWTopView *_instance;
             //设置底部线的frame
             _bottomLine.frame = CGRectMake(_selectedBtn.x_yyw, self.height_yyw - 2, _selectedBtn.width_yyw, 2);
             break;
-
+            
     }
     
     _scale = _buttonTitleArray.count * screenW_yyw / _scroll.contentSize.width;
