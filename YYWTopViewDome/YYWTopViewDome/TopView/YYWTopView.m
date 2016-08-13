@@ -255,6 +255,7 @@ static YYWTopView *_instance;
 
 - (void)moveScrollViewWhenEndDecelerating:(CGFloat)currentBtnMidX
 {
+    if (_scroll.contentSize.width <= self.width_yyw)    return;
 
     if (!currentBtnMidX)    currentBtnMidX = _currentBtn.centerX_yyw;
     CGFloat offset;
