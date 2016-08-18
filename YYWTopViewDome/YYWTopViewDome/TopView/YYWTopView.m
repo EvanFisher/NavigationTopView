@@ -12,13 +12,13 @@
 
 @property (weak, nonatomic) UIScrollView *scroll;
 
-@property (weak, nonatomic) UIButton *selectedBtn;
-
 /** 按钮文字中心的X值 */
 @property (assign, nonatomic) CGFloat btnTitleCenterX;
 
 /** ContentView's cell与TopView's bottomLine移动的比例 */
 @property (assign, nonatomic) float scale;
+
+@property (weak, nonatomic) UIButton *selectedBtn;
 
 @property (weak, nonatomic) UIButton *currentBtn;
 
@@ -106,18 +106,15 @@ static YYWTopView *_instance;
     //获取当前类下的所有按钮
     _button = [UIButton appearanceWhenContainedIn:self.class, nil];
     
-    
 }
 
 #pragma mark - 选中按钮
 /** 选中按钮 */
 - (void)selectButton:(UIButton *)button
 {
-    
     _selectedBtn.selected = NO;
     button.selected = YES;
     _selectedBtn = button;
-    
 }
 
 
@@ -198,7 +195,7 @@ static YYWTopView *_instance;
     if (![_scroll.subviews[btnIndex+1] isKindOfClass:_currentBtn.class])
         _nextBtn = _scroll.subviews[btnIndex-1];
     
-    //变换底部线
+    //变换底部线X轴和宽度
     if (_bottomLineType && _titleChangeType != kEndDeceleratingChange)
     {
         switch ((int)_bottomLineType)
@@ -227,7 +224,7 @@ static YYWTopView *_instance;
         }
         
         
-        //变换title
+        //变换title颜色
         if ((int)_titleChangeType == kMidwayChange)
         {
             //根据移动的x轴, 拿到选中的按钮
@@ -237,7 +234,6 @@ static YYWTopView *_instance;
         }
         else if ((int)_titleChangeType == kGradualChange)
         {
-            
             
             CGFloat gradulValueUp = (contentOffsetX / _scroll.width_yyw - btnIndex);
             
@@ -255,8 +251,7 @@ static YYWTopView *_instance;
 
 - (void)moveScrollViewWhenEndDecelerating:(CGFloat)currentBtnMidX
 {
-    
-    
+
     if (!currentBtnMidX)    currentBtnMidX = _currentBtn.centerX_yyw;
     CGFloat offset;
     CGFloat halfWidth = _scroll.width_yyw * 0.5;
@@ -272,8 +267,7 @@ static YYWTopView *_instance;
     [_scroll setContentOffset:CGPointMake(offset, 0) animated:YES];
     
     [self selectButton:_currentBtn];
-    
-    
+
     
     if (_titleChangeType == kEndDeceleratingChange)
         [UIView animateWithDuration:0.15 animations:^{
@@ -314,7 +308,6 @@ static YYWTopView *_instance;
     if (_bottomLineType)
         switch ((int)_bottomLineType)
     {
-            
         case kEqualToTitle:
             
             //设置底部线的frame
@@ -323,13 +316,11 @@ static YYWTopView *_instance;
             _btnTitleCenterX = _selectedBtn.titleLabel.centerX_yyw;
             break;
             
-            
         case kEqualToButton:
             
             //设置底部线的frame
             _bottomLine.frame = CGRectMake(_selectedBtn.x_yyw, self.height_yyw - 2, _selectedBtn.width_yyw, 2);
             break;
-            
     }
     
     _scale = _buttonTitleArray.count * screenW_yyw / _scroll.contentSize.width;

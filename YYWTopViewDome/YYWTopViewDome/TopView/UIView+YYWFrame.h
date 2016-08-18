@@ -10,6 +10,7 @@
 
 #define screenW_yyw [UIScreen mainScreen].bounds.size.width
 #define screenH_yyw [UIScreen mainScreen].bounds.size.height
+#define YYWLog(...) NSLog(@"%s %d行\n %@\n\n", __func__, __LINE__, [NSString stringWithFormat:__VA_ARGS__])
 
 @interface UIView (YYWFrame)
 /** 快速取center.x的值 */

@@ -43,20 +43,17 @@
 {
     
     YYWTopView *topView = [YYWTopView topViewWithButtonArray:_topBtnArray];
-    
-    
-    
+
     topView.frame = CGRectMake(0, 20, screenW_yyw + 200, 44);
-    
-    
+
 //    topView.bottomLineType = kEqualToTitle;
-    
     
 //    topView.titleChangeType = kMidwayChange;
     
 //    topView.gradualChangeTitleEndClicking = YES;
     
     [self.view addSubview:topView];
+    
     
     _topView = topView;
     

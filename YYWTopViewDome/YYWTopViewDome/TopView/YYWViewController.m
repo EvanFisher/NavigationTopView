@@ -145,8 +145,8 @@ static NSString * const CollectionCell = @"CollectionCell";
     return cell;
 }
 
-#pragma mark - UICollectionViewDelegate
 
+#pragma mark - UICollectionViewDelegate
 //当Collection滚动时, 调用Button的方法, 让底部线跟着移动
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
