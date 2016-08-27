@@ -8,6 +8,33 @@
 
 #import "YYWTopView.h"
 
+@interface customBtn : UIButton
+
+@end
+
+
+
+
+@implementation customBtn
+
+-(void)setHighlighted:(BOOL)highlighted
+{
+
+}
+
+@end
+
+
+
+
+
+
+
+
+
+
+
+
 @interface YYWTopView()
 
 @property (weak, nonatomic) UIScrollView *scroll;
@@ -77,7 +104,7 @@ static YYWTopView *_instance;
     
     for (int i = 0; i < _buttonTitleArray.count; i++)
     {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *btn = [customBtn buttonWithType:UIButtonTypeCustom];
         //设置按钮文字
         [btn setTitle:_buttonTitleArray[i] forState:UIControlStateNormal];
         //默认常态为黑色, 选中为红色
@@ -85,6 +112,7 @@ static YYWTopView *_instance;
         [btn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         // 设置按钮字体
         btn.titleLabel.font = [UIFont systemFontOfSize:17];
+        
         
         //默认第一个按钮被点击
         if (!i)  _selectedBtn = btn;
@@ -249,6 +277,7 @@ static YYWTopView *_instance;
 }
 
 
+
 - (void)moveScrollViewWhenEndDecelerating:(CGFloat)currentBtnMidX
 {
 
@@ -285,11 +314,9 @@ static YYWTopView *_instance;
 
 -(void)layoutSubviews
 {
-    //不要忘记这一步
     [super layoutSubviews];
     
-    
-    _scroll.contentSize = CGSizeMake(self.width_yyw, 0);
+    _scroll.contentSize = self.frame.size;
     
     if (self.width_yyw > screenW_yyw)
         _scroll.frame = CGRectMake(0, 0, screenW_yyw, self.height_yyw);
@@ -310,7 +337,6 @@ static YYWTopView *_instance;
     {
         case kEqualToTitle:
             
-            //设置底部线的frame
             _bottomLine.frame = CGRectMake(_selectedBtn.titleLabel.x_yyw,  self.height_yyw - 2, _selectedBtn.titleLabel.width_yyw, 2);
             _bottomLine.centerX_yyw = _selectedBtn.centerX_yyw;
             _btnTitleCenterX = _selectedBtn.titleLabel.centerX_yyw;
@@ -318,7 +344,6 @@ static YYWTopView *_instance;
             
         case kEqualToButton:
             
-            //设置底部线的frame
             _bottomLine.frame = CGRectMake(_selectedBtn.x_yyw, self.height_yyw - 2, _selectedBtn.width_yyw, 2);
             break;
     }

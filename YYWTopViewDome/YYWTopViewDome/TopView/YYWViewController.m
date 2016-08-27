@@ -49,10 +49,11 @@ static NSString * const CollectionCell = @"CollectionCell";
     
     
     //在block方法里移动ContentView
-    __weak YYWTopView* weakTopView = topView;
+    __weak YYWTopView *weakTopView = topView;
+    __weak UICollectionView *weakContentView = _contentView;
     topView.moveContentView = ^(int btnIndex)
     {
-        [_contentView setContentOffset:CGPointMake(btnIndex * screenW_yyw, 0)animated:weakTopView.gradualChangeTitleEndClicking];
+        [weakContentView setContentOffset:CGPointMake(btnIndex * screenW_yyw, 0)animated:weakTopView.gradualChangeTitleEndClicking];
     };
     _topView = topView;
     

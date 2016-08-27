@@ -44,13 +44,14 @@
     
     YYWTopView *topView = [YYWTopView topViewWithButtonArray:_topBtnArray];
 
-    topView.frame = CGRectMake(0, 20, screenW_yyw + 200, 44);
+    topView.frame = CGRectMake(0, 20, screenW_yyw + 100, 44);
 
-//    topView.bottomLineType = kEqualToTitle;
+    
+//    topView.bottomLineType = kEqualToButton;
     
 //    topView.titleChangeType = kMidwayChange;
     
-//    topView.gradualChangeTitleEndClicking = YES;
+    topView.gradualChangeTitleEndClicking = YES;
     
     [self.view addSubview:topView];
     
@@ -65,32 +66,32 @@
 {
     UIViewController *VC1 = [[UIViewController alloc] init];
     VC1.view.backgroundColor = [UIColor purpleColor];
-    [self addOneChildVC:VC1 withTitle:@"Object-C"];
+    [self addOneChildVC:VC1 withTitle:@"全部歌曲"];
     
     
     UIViewController *VC2 = [[UIViewController alloc] init];
     VC2.view.backgroundColor = [UIColor whiteColor];
-    [self addOneChildVC:VC2 withTitle:@"C#"];
+    [self addOneChildVC:VC2 withTitle:@"喜欢"];
     
     
     UIViewController *VC3 = [[UIViewController alloc] init];
     VC3.view.backgroundColor = [UIColor whiteColor];
-    [self addOneChildVC:VC3 withTitle:@"Java"];
+    [self addOneChildVC:VC3 withTitle:@"收藏夹"];
     
-    UIViewController *VC4 = [[UIViewController alloc] init];
-    VC4.view.backgroundColor = [UIColor whiteColor];
-    [self addOneChildVC:VC4 withTitle:@"Javascript"];
+//    UIViewController *VC4 = [[UIViewController alloc] init];
+//    VC4.view.backgroundColor = [UIColor whiteColor];
+//    [self addOneChildVC:VC4 withTitle:@"Javascript"];
     
-    UIViewController *VC5 = [[UIViewController alloc] init];
-    VC5.view.backgroundColor = [UIColor greenColor];
-    [self addOneChildVC:VC5 withTitle:@"C"];
+//    UIViewController *VC5 = [[UIViewController alloc] init];
+//    VC5.view.backgroundColor = [UIColor greenColor];
+//    [self addOneChildVC:VC5 withTitle:@"C"];
     //
     UIViewController *VC6 = [[UIViewController alloc] init];
     VC6.view.backgroundColor = [UIColor grayColor];
-    [self addOneChildVC:VC6 withTitle:@"C++"];
+    [self addOneChildVC:VC6 withTitle:@"歌手"];
     
     //接收返回的数组
-    [self.topBtnArray addObjectsFromArray:[self addOneChildVC:[[UIViewController alloc] init] withTitle:@"Python"]];
+    [self.topBtnArray addObjectsFromArray:[self addOneChildVC:[[UIViewController alloc] init] withTitle:@"专辑"]];
     
     
 }
